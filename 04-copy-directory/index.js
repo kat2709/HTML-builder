@@ -4,7 +4,16 @@ const path = require('path');
 const srcPath = path.join(__dirname, 'files');
 const destPath = path.join(__dirname, 'files-copy');
 
-copy(srcPath, destPath);
+async function main() {
+  try {
+    await fs.rm(destPath, { recursive: true, force: true });
+  } catch (err) {
+    console.log('Failed to remove destination directory', err);
+    return;
+  }
+  copy(srcPath, destPath);
+}
+main();
 
 async function copy(src, dest) {
   let stats;
